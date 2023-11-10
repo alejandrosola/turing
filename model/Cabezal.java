@@ -2,9 +2,11 @@ package model;
 
 public class Cabezal {
     private int position;
+    private Cinta cinta;
 
     public Cabezal() {
         position = 0;
+        this.cinta = new Cinta();
     }
 
     public int getPosition() {
@@ -13,6 +15,10 @@ public class Cabezal {
 
     public void moverDerecha() {
         position++;
+    }
+
+    public Cinta getCinta() {
+        return this.cinta;
     }
 
     public void moverIzquierda() {
@@ -24,11 +30,11 @@ public class Cabezal {
         }
     }
 
-    public char leerCinta(Cinta cinta) {
+    public char leerCinta() {
         return cinta.leer(position);
     }
 
-    public void escribirCinta(Cinta cinta, char simbolo) {
+    public void escribirCinta(char simbolo) {
         cinta.escribir(position, simbolo);
     }
 }

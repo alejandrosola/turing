@@ -21,7 +21,17 @@ public class Estado {
         transiciones.put(readSymbol, transition);
     }
 
-    public Transicion getTransition(char readSymbol) {
-        return transiciones.get(readSymbol);
+    public Transicion getTransicion(char caracterLeido) {
+        return transiciones.get(caracterLeido);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.nombre.equals(((Estado) obj).getNombre());
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Estado %s", this.getNombre());
     }
 }

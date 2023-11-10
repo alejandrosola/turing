@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cinta {
@@ -22,6 +23,24 @@ public class Cinta {
             }
             celdas.set(posicion, caracter);
         }
+    }
+
+    public void setCeldas(String input) {
+        List<Character> chars = new ArrayList<>();
+        for (int i = 0; i < input.length(); i++) {
+            chars.add(input.charAt(i));
+        }
+        this.celdas = chars;
+    }
+
+    @Override
+    public String toString() {
+        List<Character> chars = new ArrayList<>();
+        for (int i = 0; i < this.celdas.size(); i++) {
+            chars.add(this.celdas.get(i));
+        }
+
+        return chars.toString();
     }
 
 }

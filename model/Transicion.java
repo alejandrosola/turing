@@ -29,4 +29,11 @@ public class Transicion {
     public Estado getEstadoSiguiente() {
         return estadoSiguiente;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Leo %s. Escribo %s. Voy a %s", this.simboloLectura, this.simboloEscritura,
+                this.estadoSiguiente);
+    }
+
 }
