@@ -16,17 +16,14 @@ public class Test {
             estados.put(String.format("q%d", i), new Estado(String.format("q%d", i)));
         }
 
-        estados.get("q1").agregarTransicion('a', 'b', true, estados.get("q2"));
+        estados.get("q1").agregarTransicion('a', 'a', true, estados.get("q1"));
+        estados.get("q1").agregarTransicion('_', '_', true, estados.get("q1"));
 
         maquina.setEstados(estados);
         maquina.setEstadoAceptador(estados.get("q2"));
         maquina.setEstadoNoAceptador(estados.get("q3"));
-        /*
-         * System.out.println(estados.get("q1").getTransicion('a'));
-         */
-        /*
-         * System.out.println(estados.values());
-         */ maquina.run("ab", estados.get("q1"), true);
+
+        maquina.run("aa", estados.get("q1"), false);
     }
 
 }

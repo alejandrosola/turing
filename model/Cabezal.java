@@ -25,13 +25,15 @@ public class Cabezal {
         // Qué pasa si quiero ir más a la izquierda?
         // Capaz puedo hacer un desplazamiento de la cinta a la derecha para tener un
         // lugar a la izquierda
-        if (position > 0) {
-            position--;
-        }
+        position--;
     }
 
     public char leerCinta() {
-        return cinta.leer(position);
+        char leido = cinta.leer(position);
+        if (position < 0) {
+            position++;
+        }
+        return leido;
     }
 
     public void escribirCinta(char simbolo) {

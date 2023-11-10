@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import aplicacion.Constantes;
+
 public class MaquinaTuring {
     private Cabezal cabezal;
     private Map<String, Estado> estados;
@@ -43,22 +45,24 @@ public class MaquinaTuring {
     }
 
     public void run(String input, Estado estadoInicial, boolean pausado) {
+        this.run(input, estadoInicial, pausado, Constantes.RAPIDO);
+    }
 
-        Scanner scanner = new Scanner(System.in);
+    public void run(String input, Estado estadoInicial, boolean pausado, int velocidad) {
+
         this.estadoActual = estadoInicial;
         this.cabezal.getCinta().setCeldas(input);
-        System.out.println(this.estadoActual + " ACTUAL");
-        System.out.println(this.estadoAceptador + " ACEPTADOR");
-        System.out.println(this.estadoNoAceptador + " NO ACEPTADOR");
+        Scanner scanner = new Scanner(System.in);
         while (!this.estadoActual.equals(this.estadoAceptador) && !this.estadoActual.equals(this.estadoNoAceptador)) {
-            System.out.println(this.cabezal.getCinta() + "Cinta");
+
             char caracterLeido = this.cabezal.leerCinta();
+            System.out.println(this.cabezal.getCinta());
+            this.imprimirCinta();
 
             Transicion transicion = this.estadoActual.getTransicion(caracterLeido);
             if (transicion == null) {
-                throw new IllegalArgumentException(
-                        String.format("No hay transición definida para el caracter %s en el estado %s", caracterLeido,
-                                this.estadoActual.getNombre()));
+                System.out.println("Cadena rechazada");
+                return;
             }
 
             this.cabezal.escribirCinta(transicion.getSimboloEscritura());
@@ -71,10 +75,39 @@ public class MaquinaTuring {
 
             if (pausado) {
                 scanner.nextLine();
+            } else {
+                if (velocidad == Constantes.RAPIDO) {
+                    try {
+                        Thread.sleep(20);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
             }
         }
-        System.out.println(this.cabezal.getCinta() + "Cinta");
-        System.out.println(this.estadoActual.equals(this.estadoAceptador));
+
+        String mensaje = this.estadoActual.equals(this.estadoAceptador) ? "Cadena aceptada" : "Cadena rechazada";
+        System.out.println(mensaje);
+        scanner.close();
+    }
+
+    public void imprimirCinta() {
+        StringBuilder cabezalPosicion = new StringBuilder("");
+        for (int i = 0; i < this.cabezal.getCinta().getCeldas().size(); i++) {
+            cabezalPosicion.append(" ");
+        }
+        while (cabezalPosicion.length() <= this.cabezal.getPosition()) {
+            cabezalPosicion.append(" ");
+        }
+        cabezalPosicion.setCharAt(this.cabezal.getPosition(), '^');
+        System.out.println(cabezalPosicion);
     }
 
 }

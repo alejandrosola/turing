@@ -10,7 +10,9 @@ public class Cinta {
         if (posicion >= 0 && posicion < celdas.size()) {
             return celdas.get(posicion);
         } else {
-            return ' ';
+            posicion = posicion < 0 ? posicion + 1 : posicion;
+            celdas.add(posicion, '_');
+            return '_';
         }
     }
 
@@ -33,14 +35,18 @@ public class Cinta {
         this.celdas = chars;
     }
 
+    public List<Character> getCeldas() {
+        return this.celdas;
+    }
+
     @Override
     public String toString() {
-        List<Character> chars = new ArrayList<>();
+        String ans = "";
         for (int i = 0; i < this.celdas.size(); i++) {
-            chars.add(this.celdas.get(i));
+            ans += (this.celdas.get(i));
         }
 
-        return chars.toString();
+        return ans;
     }
 
 }
