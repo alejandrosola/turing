@@ -53,6 +53,6 @@ public class TestBinarios {
         maquina.setEstadoAceptador(estados.get("qa"));
         maquina.setEstadoNoAceptador(estados.get("qr"));
 
-        maquina.run("010000110101#010000100101", estados.get("q1"), false, Constantes.LENTO);
+        maquina.run("010000110101#010000110101", estados.get("q1"), false, Constantes.RAPIDO);
     }
 }

@@ -53,7 +53,7 @@ public class MaquinaTuring {
         this.estadoActual = estadoInicial;
         this.cabezal.getCinta().setCeldas(input);
         Scanner scanner = new Scanner(System.in);
-        while (!this.estadoActual.equals(this.estadoAceptador) && !this.estadoActual.equals(this.estadoNoAceptador)) {
+        while (!this.estadoActual.equals(this.estadoAceptador)) {
 
             char caracterLeido = this.cabezal.leerCinta();
             System.out.println(this.cabezal.getCinta());
@@ -78,7 +78,7 @@ public class MaquinaTuring {
             } else {
                 if (velocidad == Constantes.RAPIDO) {
                     try {
-                        Thread.sleep(20);
+                        Thread.sleep(50);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
