@@ -27,6 +27,8 @@ public class Estado {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null)
+            return this == null;
         return this.nombre.equals(((Estado) obj).getNombre());
     }
 

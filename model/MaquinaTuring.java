@@ -1,5 +1,8 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -103,9 +106,11 @@ public class MaquinaTuring {
         for (int i = 0; i < this.cabezal.getCinta().getCeldas().size(); i++) {
             cabezalPosicion.append(" ");
         }
+
         while (cabezalPosicion.length() <= this.cabezal.getPosition()) {
             cabezalPosicion.append(" ");
         }
+
         cabezalPosicion.setCharAt(this.cabezal.getPosition(), '^');
         System.out.println(cabezalPosicion);
     }

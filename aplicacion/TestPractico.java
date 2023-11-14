@@ -22,13 +22,13 @@ public class TestPractico {
 
         estados.get("q2").agregarTransicion('1', '1', true, estados.get("q3"));
 
-        estados.get("q3").agregarTransicion('_', '_', true, estados.get("q4"));
+        estados.get("q3").agregarTransicion(Constantes.ESPACIO, Constantes.ESPACIO, true, estados.get("q4"));
         estados.get("q3").agregarTransicion('0', '0', true, estados.get("q2"));
 
         estados.get("q5").agregarTransicion('0', '0', true, estados.get("q6"));
 
         estados.get("q6").agregarTransicion('1', '1', true, estados.get("q5"));
-        estados.get("q6").agregarTransicion('_', '_', true, estados.get("q4"));
+        estados.get("q6").agregarTransicion(Constantes.ESPACIO, Constantes.ESPACIO, true, estados.get("q4"));
 
         maquina.setEstados(estados);
         maquina.setEstadoAceptador(estados.get("q4"));

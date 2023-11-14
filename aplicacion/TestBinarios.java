@@ -47,12 +47,12 @@ public class TestBinarios {
         estados.get("q7").agregarTransicion('x', 'x', true, estados.get("q1"));
 
         estados.get("q8").agregarTransicion('x', 'x', true, estados.get("q8"));
-        estados.get("q8").agregarTransicion('_', '_', true, estados.get("qa"));
+        estados.get("q8").agregarTransicion(Constantes.ESPACIO, Constantes.ESPACIO, true, estados.get("qa"));
 
         maquina.setEstados(estados);
         maquina.setEstadoAceptador(estados.get("qa"));
         maquina.setEstadoNoAceptador(estados.get("qr"));
 
-        maquina.run("010000110101#010000110101", estados.get("q1"), false, Constantes.RAPIDO);
+        maquina.run("010000110101#010000110101", estados.get("q1"), false, Constantes.LENTO);
     }
 }

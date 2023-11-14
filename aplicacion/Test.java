@@ -17,7 +17,7 @@ public class Test {
         }
 
         estados.get("q1").agregarTransicion('a', 'a', true, estados.get("q1"));
-        estados.get("q1").agregarTransicion('_', '_', true, estados.get("q1"));
+        estados.get("q1").agregarTransicion(Constantes.ESPACIO, Constantes.ESPACIO, true, estados.get("q1"));
 
         maquina.setEstados(estados);
         maquina.setEstadoAceptador(estados.get("q2"));

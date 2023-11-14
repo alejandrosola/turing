@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import aplicacion.Constantes;
+
 public class Cinta {
     private List<Character> celdas;
 
@@ -11,8 +13,8 @@ public class Cinta {
             return celdas.get(posicion);
         } else {
             posicion = posicion < 0 ? posicion + 1 : posicion;
-            celdas.add(posicion, '_');
-            return '_';
+            celdas.add(posicion, Constantes.ESPACIO);
+            return Constantes.ESPACIO;
         }
     }
 
