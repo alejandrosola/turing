@@ -17,7 +17,13 @@ public class Estado {
     }
 
     public void agregarTransicion(char readSymbol, char writeSymbol, boolean moveDirection, Estado nextState) {
-        Transicion transition = new Transicion(readSymbol, writeSymbol, moveDirection, nextState);
+        Transicion transition = new Transicion(readSymbol, writeSymbol, moveDirection, nextState, null);
+        transiciones.put(readSymbol, transition);
+    }
+
+    public void agregarTransicion(char readSymbol, char writeSymbol, boolean moveDirection, Estado nextState,
+            MaquinaTuring accion) {
+        Transicion transition = new Transicion(readSymbol, writeSymbol, moveDirection, nextState, accion);
         transiciones.put(readSymbol, transition);
     }
 

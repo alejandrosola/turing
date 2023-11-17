@@ -1,9 +1,7 @@
 package model;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -12,35 +10,43 @@ import aplicacion.Constantes;
 public class MaquinaTuring {
     private Cabezal cabezal;
     private Map<String, Estado> estados;
-    private Estado estadoActual, estadoAceptador, estadoNoAceptador;
+    private Estado estadoActual, estadoAceptador;
+    private Estado estadoInicial;
+    private boolean subMaquina;
     /* private int posicionActual; */
 
-    public MaquinaTuring(String estadoAceptador, String estadoNoAceptador) {
+    public MaquinaTuring(Estado estadoInicial) {
         this.estados = new HashMap<>();
         this.estadoAceptador = this.estados.get(estadoAceptador);
-        this.estadoNoAceptador = this.estados.get(estadoNoAceptador);
         this.cabezal = new Cabezal();
+        this.subMaquina = false;
     }
 
     public MaquinaTuring() {
         this.estados = new HashMap<>();
         this.cabezal = new Cabezal();
+        this.subMaquina = false;
+    }
+
+    public MaquinaTuring(Cabezal cabezal) {
+        this.cabezal = cabezal;
+        this.subMaquina = false;
+    }
+
+    public void setSubMaquina(boolean s) {
+        this.subMaquina = s;
+    }
+
+    public void setEstadoInicial(Estado e) {
+        this.estadoInicial = e;
     }
 
     public void setEstadoAceptador(Estado e) {
         this.estadoAceptador = e;
     }
 
-    public Estado getEstadoNoAceptador() {
-        return this.estadoNoAceptador;
-    }
-
     public Estado getEstadoAceptador() {
         return this.estadoAceptador;
-    }
-
-    public void setEstadoNoAceptador(Estado e) {
-        this.estadoNoAceptador = e;
     }
 
     public void setEstados(Map<String, Estado> estados) {
@@ -48,18 +54,35 @@ public class MaquinaTuring {
     }
 
     public void run(String input, Estado estadoInicial, boolean pausado) {
-        this.run(input, estadoInicial, pausado, Constantes.RAPIDO);
+        this.run(input, estadoInicial, pausado, Constantes.RAPIDO, null);
     }
 
-    public void run(String input, Estado estadoInicial, boolean pausado, int velocidad) {
+    public void run(List<Character> input, Estado estadoInicial, boolean pausado, int velocidad) {
+        String i = "";
+        for (Character c : input) {
+            i += c;
+        }
+        this.run(i, estadoInicial, pausado, velocidad, null);
+    }
 
-        this.estadoActual = estadoInicial;
-        this.cabezal.getCinta().setCeldas(input);
+    public void run(String input, Estado estadoInicial, boolean pausado, int velocidad, Cabezal cabezal) {
+
+        if (estadoInicial != null) {
+            this.estadoActual = estadoInicial;
+        } else {
+            this.estadoActual = this.estadoInicial;
+        }
+
+        if (cabezal != null) {
+            this.cabezal = cabezal;
+        } else {
+            this.cabezal.getCinta().setCeldas(input);
+        }
+
         Scanner scanner = new Scanner(System.in);
         while (!this.estadoActual.equals(this.estadoAceptador)) {
 
             char caracterLeido = this.cabezal.leerCinta();
-            System.out.println(this.cabezal.getCinta());
             this.imprimirCinta();
 
             Transicion transicion = this.estadoActual.getTransicion(caracterLeido);
@@ -70,10 +93,16 @@ public class MaquinaTuring {
 
             this.cabezal.escribirCinta(transicion.getSimboloEscritura());
             this.estadoActual = transicion.getEstadoSiguiente();
-            if (transicion.getDireccionMovimiento()) {
-                this.cabezal.moverDerecha();
+
+            if (transicion.getAccion() != null) {
+                transicion.getAccion().run(input, null, false, Constantes.RAPIDO,
+                        this.cabezal);
             } else {
-                this.cabezal.moverIzquierda();
+                if (transicion.getDireccionMovimiento()) {
+                    this.cabezal.moverDerecha();
+                } else {
+                    this.cabezal.moverIzquierda();
+                }
             }
 
             if (pausado) {
@@ -97,11 +126,15 @@ public class MaquinaTuring {
         }
 
         String mensaje = this.estadoActual.equals(this.estadoAceptador) ? "Cadena aceptada" : "Cadena rechazada";
-        System.out.println(mensaje);
-        scanner.close();
+        if (!this.subMaquina) {
+            System.out.println(mensaje);
+            scanner.close();
+        }
+        return;
     }
 
     public void imprimirCinta() {
+        System.out.println(this.cabezal.getCinta());
         StringBuilder cabezalPosicion = new StringBuilder("");
         for (int i = 0; i < this.cabezal.getCinta().getCeldas().size(); i++) {
             cabezalPosicion.append(" ");

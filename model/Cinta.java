@@ -37,6 +37,10 @@ public class Cinta {
         this.celdas = chars;
     }
 
+    public void setCeldas(List<Character> input) {
+        this.celdas = celdas;
+    }
+
     public List<Character> getCeldas() {
         return this.celdas;
     }
