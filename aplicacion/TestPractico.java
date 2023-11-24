@@ -2,12 +2,24 @@ package aplicacion;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import model.Estado;
 import model.MaquinaTuring;
 
 public class TestPractico {
     public static void main(String args[]) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Esta máquina de Turing lee un número binario e indica si está formado por el patrón 01 o 10");
+        System.out.println("Ingrese la cadena: ");
+        String cadena = scanner.next();
+
+        System.out.println("1. PAUSADO\n2. RAPIDO\n3. LENTO");
+        int opcion = scanner.nextInt();
+
+        boolean pausado = opcion == 1 ? true : false;
+        int velocidad = opcion == 2 ? Constantes.RAPIDO : Constantes.LENTO;
 
         MaquinaTuring maquina = new MaquinaTuring();
 
@@ -32,7 +44,7 @@ public class TestPractico {
 
         maquina.setEstados(estados);
         maquina.setEstadoAceptador(estados.get("q4"));
-        maquina.run("1010101010", estados.get("q1"), true);
+        maquina.run(cadena, estados.get("q1"), pausado, velocidad);
 
     }
 

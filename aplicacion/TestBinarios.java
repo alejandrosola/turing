@@ -2,12 +2,27 @@ package aplicacion;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import model.Estado;
 import model.MaquinaTuring;
 
 public class TestBinarios {
     public static void main(String args[]) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println(
+                "Esta máquina de Turing acepta dos números binarios separados por un # e indica si son iguales o no");
+        System.out.println("Ingrese la cadena: ");
+        String cadena = scanner.next();
+
+        System.out.println("1. PAUSADO\n2. RAPIDO\n3. LENTO");
+        int opcion = scanner.nextInt();
+
+        boolean pausado = opcion == 1 ? true : false;
+        int velocidad = opcion == 2 ? Constantes.RAPIDO : Constantes.LENTO;
+
         MaquinaTuring maquina = new MaquinaTuring();
 
         Map<String, Estado> estados = new HashMap<>();
@@ -53,6 +68,6 @@ public class TestBinarios {
         maquina.setEstadoAceptador(estados.get("qa"));
         maquina.setEstadoNoAceptador(estados.get("qr"));
 
-        maquina.run("010000110101#010000110101", estados.get("q1"), false, Constantes.LENTO);
+        maquina.run(cadena, estados.get("q1"), pausado, velocidad);
     }
 }
